@@ -114,9 +114,11 @@ int main(){
     // transversal(head);
 
     //? Code to insert element before head pointer
-    insertLast(head);
-    std::cout<<"Your new list is: "<<std::endl;
-    transversal(head);
+    // insertLast(head);
+    // std::cout<<"Your new list is: "<<std::endl;
+    // transversal(head);
+
+    
 
     return 0;
 }
