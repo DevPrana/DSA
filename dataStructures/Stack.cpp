@@ -50,13 +50,33 @@ int pop(struct container* temp){
     return -1;
 }
 
-int peek(struct container* temp,int index){
+void peek(struct container* temp,int index){
     if(isEmpty(temp)){
         std::cout<<"There are no elements in the stack to peek Error: ";
-        return -101;
     }
     else{
-        int val=temp->arr[index];
+        std::cout<<temp->arr[index]<<std::endl;
+    }
+}
+
+int stackBottom(struct container* temp){
+    if(isEmpty(temp)){
+        std::cout<<"The Stack is Empty! "<<std::endl;
+        return 0;
+    }
+    else{
+        int val=temp->arr[0];
+        return val;
+    }
+}
+
+int stackTop(struct container* temp){
+    if(isEmpty(temp)){
+        std::cout<<"The stack is Empty/n Error: ";
+        return 404;
+    }
+    else{
+        int val=temp->arr[temp->top];
         return val;
     }
 }
@@ -80,7 +100,8 @@ int main(){
     push(stack);
     int index;
     std::cin>>index;
-    std::cout<<"The element at index "<<index<<" is "<<peek(stack,index)<<std::endl;
+    std::cout<<"The element at index "<<index<<" is ";
+    peek(stack,index);
 
     return 0;
 }
