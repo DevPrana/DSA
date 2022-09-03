@@ -28,3 +28,11 @@ It refers to the space our recursive algorithm occupies inside the Stack.
 For example in a `fibbonacci sequence` recursive algorithm we call fib(N)= fib(n-1) + fib(n-2)
 which forms a recurive tree in this recursive tree all the fib calls cannot be present in the stack at the same time this is because when we do fib(N)= fib(n-1) + fib(n-2) We call fib(n-1) first everytime and till tis fib(n-1) has not finished executing by getting its value forming from its own implementation fib(n-2) will not execute. This makes it so that fib(n-1) will have to finish first and fib(n-1) will call fib(n-2) and fib(n-3) but fib (n-2) will ahve to finish first this causes our stack to never be occupied by two stacks from the same level in a recursive tree.
 
+#### Infix to Postfix
+If there is an operand append to postfi<br>
+Character is left parenthesis then Push<br>
+Character is Right parenthesis then pop all values from stack and append to postfix expression until left parenthesis is ignored<br>
+While precendence of input character is less than precedence of stack top append it to postfix
+If precedence of input character is greater than or equal to then push to `TODO`<br>
+Repeat 3 to 7 pop all the operators from stack then 
+

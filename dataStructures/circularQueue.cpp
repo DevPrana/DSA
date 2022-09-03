@@ -1,52 +1,63 @@
-#include <iostream>
-
+#include<iostream>
 struct container{
     int front;
-    int back;
+    int rear;
     int size;
-    int *arr;
+    int* arr;
 };
 
-int isFull(struct container* temp){
-    if(temp->back==(temp->size)-1){
+int isEmpty(struct container* temp){
+    if(temp->front==temp->rear){
         return 1;
     }
     else{
         return 0;
     }
 }
-void enQueue(struct container* temp){
-    if(isFull(temp)){
-        std::cout<<"The queue is already full"<<std::endl;
+
+int isFull(struct container* temp){
+    if((temp->rear+1)%temp->size==temp->front){
+        return 1;
     }
     else{
-        temp->back++;
+        return 0;
+    }
+}
+
+void enQueue(struct container* temp){
+    if(isFull(temp)){
+        std::cout<<"Queue is full"<<std::endl;
+    }
+    else{
+        temp->rear=(temp->rear+1)%temp->size;
         int data;
-        std::cout<<"Enter the element you want to queue up: ";
+        std::cout<<"Enter element you want to enqueue: ";
         std::cin>>data;
-        temp->arr[temp->back]=data;
+        temp->arr[temp->rear]=data;
     }
 }
 
 int deQueue(struct container* temp){
-    if(temp->front==temp->back){
-        std::cout<<"There are no more elements to deQueue! Error: ";
+    if(isEmpty(temp)){
+        std::cout<<"There are no elements present in the queue Error: ";
         return 404;
     }
     else{
-        temp->front++;
-        return temp->arr[temp->front];
+        int val;
+        temp->front=(temp->front+1)%temp->size;
+        val=temp->arr[temp->front];
+        return val;
     }
 }
 
 int main(){
     struct container* queue=(struct container*)malloc(sizeof(struct container));
-    queue->back=queue->front=-1;
+    queue->rear=queue->front=0;
     
     int size;
     std::cout<<"Enter the size of your queue: ";
     std::cin>>size;
-    queue->size=size;
+    queue->size=size+1;
 
     queue->arr=(int*)malloc(size*sizeof(int));
 
@@ -55,13 +66,18 @@ int main(){
     enQueue(queue);
     enQueue(queue);
     enQueue(queue);
+    std::cout<<deQueue(queue)<<std::endl;
+    std::cout<<deQueue(queue)<<std::endl;
     enQueue(queue);
+    enQueue(queue);
+    
     std::cout<<deQueue(queue)<<std::endl;
     std::cout<<deQueue(queue)<<std::endl;
     std::cout<<deQueue(queue)<<std::endl;
     std::cout<<deQueue(queue)<<std::endl;
     std::cout<<deQueue(queue)<<std::endl;
-    std::cout<<deQueue(queue)<<std::endl;
-    std::cout<<deQueue(queue)<<std::endl;
-    std::cout<<deQueue(queue)<<std::endl;
+    // std::cout<<deQueue(queue)<<std::endl;
+    // std::cout<<deQueue(queue)<<std::endl;
+    // std::cout<<deQueue(queue)<<std::endl;
+    // std::cout<<deQueue(queue)<<std::endl;
 }

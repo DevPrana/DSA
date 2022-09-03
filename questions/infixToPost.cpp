@@ -81,27 +81,7 @@ int stackTop(struct container* temp){
     }
 }
 
-int main(){
-
-    struct container* stack=(struct container*)malloc(sizeof(struct container));
-    stack->top=-1;
-    int size;
-    std::cout<<"Enter size of your stack: ";
-    std::cin>>size;
-    stack->size=size;
+char * infixToPostfix(char * infix){
+    struct container * sp=(struct container *)malloc(sizeof(struct container));
     
-    stack->arr=(int *)malloc( stack->size * sizeof(int) );
-
-    //?Code to push elements into stack
-    push(stack);
-    push(stack);
-    push(stack);
-    push(stack);
-    push(stack);
-    int index;
-    std::cin>>index;
-    std::cout<<"The element at index "<<index<<" is ";
-    peek(stack,index);
-
-    return 0;
 }
