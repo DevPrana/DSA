@@ -111,15 +111,29 @@ struct node *Delete(struct node* root,int val){
         }
     }
     
+    if (root->left==NULL&&root->right==NULL){
+        free(root);
+        return NULL;
+    }
+
     // std::cout<<(root->left)->data<<root->right;
     if(root->left != NULL && root->right != NULL){     ///This condition will true when the node have both left and right child node.
         temp = inOrder_Predecessor(root);
         root->data = temp->data;
         std::cout<<"helo";
-        temp=NULL;
-        return root;
-        // root->left = delete_node(root->left , root->data);
+        root->left = Delete(root->left , root->data);
     }
+    else{
+        temp = root;
+        if(root->left == nullptr){
+            root = root->right;
+        }
+        else if(root->right==nullptr){
+            root  = root->left;
+        }
+        free(temp);
+    }
+    
 }
 
 node *delete_node(node *root , int val){
@@ -183,6 +197,13 @@ struct node* defaultTree(){
 int main(){
     struct node* root=(struct node*)malloc(sizeof(struct node));
     struct node* root1=(struct node*)malloc(sizeof(struct node));
+    
+    // root1=createNode(76);
+    // insertinTree(root1,54);
+    // insertinTree(root1,34);
+    // insertinTree(root1,100);
+    // preOrderTransversal(root1);
+
     int min,max;
 
     root=defaultTree();
@@ -190,7 +211,7 @@ int main(){
     preOrderTransversal(root);
     std::cout<<"\n";
 
-    Delete(root,54);
+    Delete(root,60);
     // delete_node(root,60);
     // insertinTree(root,61);
     // insertinTree(root,62);
