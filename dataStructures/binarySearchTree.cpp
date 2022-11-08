@@ -194,6 +194,10 @@ struct node* defaultTree(){
    return p;
 }
 
+void hello(int &a){
+    a+=1;
+}
+
 int main(){
     struct node* root=(struct node*)malloc(sizeof(struct node));
     struct node* root1=(struct node*)malloc(sizeof(struct node));
@@ -211,7 +215,7 @@ int main(){
     preOrderTransversal(root);
     std::cout<<"\n";
 
-    Delete(root,60);
+    // Delete(root,60);
     // delete_node(root,60);
     // insertinTree(root,61);
     // insertinTree(root,62);
@@ -219,6 +223,11 @@ int main(){
 
 
     preOrderTransversal(root);
+
+    int cnt=0;
+    hello(cnt);
+    std::cout<<cnt;
+
     // std::cout<<"\n";
 
 }

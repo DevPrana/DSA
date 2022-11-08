@@ -15,6 +15,14 @@ int isFull(struct container* temp){
         return 0;
     }
 }
+
+int isEmpty(struct container* temp){
+    if(temp->back==temp->front){
+        return 1;
+    }
+    return 0;
+}
+
 void enQueue(struct container* temp){
     if(isFull(temp)){
         std::cout<<"The queue is already full"<<std::endl;
