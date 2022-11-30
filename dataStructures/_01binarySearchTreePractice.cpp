@@ -1,133 +1,93 @@
 #include<iostream>
 
 class node{
-    public: 
+    public:
+    int data;
+    node* left;
+    node* right;
+
+    node(int data){
+        this->data=data;
+        this->left=NULL;
+        this->right=NULL;
+    }
+
+    node(){
+        std::cout<<"Enter the data you want to insert";
         int data;
-        node* right;
-        node* left;
-
-        node(){
-            int tempData;
-            std::cout<<"Please enter the node data: ";
-            std::cin>>tempData;
-            this->data=tempData;
-            this->left=NULL;
-            this->right=NULL;
-        }
-
-        node(int datta){
-            this->data=datta;
-            this->left=NULL;
-            this->right=NULL;
-        }
+        std::cin>>data;
+        this->data=data;
+        this->left=NULL;
+        this->right=NULL;
+    }
 };
 
-node* insertInTree(node* root,int data){
-    if(root==NULL){
-        return (new node(data));
+void preOrderTraversal(node* tempHead){
+    if(tempHead!=NULL){
+    std::cout<<tempHead->data<<" ";
+    preOrderTraversal(tempHead->left);
+    preOrderTraversal(tempHead->right);
     }
-    node* prev=root;
-    while(root!=NULL){
-        prev=root;
-        if(root->data>data){
-            root=root->left;
+}
+
+void insertNode(node* head,int data){
+    node* tempParent=head;
+    while(head!=NULL){
+        tempParent=head;
+        if(head->data>data){
+            head=head->left;
         }
-        else if(root->data<data){
-            root=root->right;
+        else if(head->data<data){
+            head=head->right;
         }
-        else{
-            std::cout<<"This value already exists in tree!"<<std::endl;
-            return root;
+        else return;
+    }
+    if(tempParent->data>data){
+        tempParent->left=new node(data);
+    }
+    else if(tempParent->data<data){
+        tempParent->right=new node(data);
+    }
+}
+
+node* deleteNode(node* head,int data){
+    node* tempParent=head;
+    if(head!=NULL){
+        if(head->data>data){
+            head->left=deleteNode(head->left,data);
+            return head;
+        }
+        else if(head->data<data){
+            head->right=deleteNode(head->right,data);
+            return head;
         }
     }
-    if(prev->data>data){
-        prev->left=new node(data);
-        return prev->left;
+    if(head->left==NULL){
+        tempParent=head->right;
+        delete(head);
+        return tempParent;
+    }
+    else if(head->right==NULL){
+        tempParent=head->left;
+        delete(head);
+        return tempParent;
     }
     else{
-        prev->right=new node(data);
-        return prev->right;
-    }
-}
-
-node* deleteNode(node* root,int target){
-    if(root==NULL){
-        return root;
-    }
-    if((root->data)>target){
-        root->left=deleteNode(root->left,target);
-        return root;
-    }
-    else if(root->data<target){
-        root->right=deleteNode(root->right,target);
-        return root;
-    }
-
-    if(root->left==NULL){
-        node* temp=root->right;
-        delete root;
-        return temp;
-    }
-
-    else if(root->right==NULL){
-        node* temp=root->left;
-        delete root;
-        return temp;
-    }
-
-    else{   //Case for 2 nodes
-        node* parent=root;
-        node* succ=root->right;
+        tempParent=head;
+        node* succ=head->right;
         while(succ->left!=NULL){
-            parent=succ;
-            succ=succ->left;
+            tempParent=succ;
+            succ=succ->right;
         }
-
-        if(parent!=root){
-            parent->left=succ->right;
+        if(tempParent!=head){
+            tempParent->left=succ->right;
         }
         else{
-            parent->right=succ->right;
+            tempParent->right=succ->right;
         }
-        root->data=succ->data;
-        delete succ;
-        return root;
-    }
-}
-
-void preOrderTraversal(node* root){
-    if(root!=NULL){
-        std::cout<<root->data<<" ";
-        preOrderTraversal(root->left);
-        preOrderTraversal(root->right);
-    }
-}
-
-void inOrderTraversal(node* root){
-    if(root!=NULL){
-        inOrderTraversal(root->left);
-        std::cout<<root->data<<" ";
-        inOrderTraversal(root->right);
-    }
-}
-
-void postOrderTraversal(node* root){
-    if(root!=NULL){
-        postOrderTraversal(root->left);
-        postOrderTraversal(root->right);
-        std::cout<<root->data<<" ";
-    }
-}
-
-void kthMinimumElement(node* root,int k){
-    static int count=0;
-    if(root!=NULL){
-        kthMinimumElement(root->left,k);
-        count++;
-        if(count==k){
-            std::cout<<"The kth minimum element is: "<<root->data<<std::endl;
-        }
-        kthMinimumElement(root->right,k);
+        head->data=succ->data;
+        delete(succ);
+        return head;
     }
 }
 
@@ -138,18 +98,19 @@ int main(){
     int data;
     std::cout<<"Enter the value you want to insert: ";
     std::cin>>data;
-    node* root=insertInTree(NULL,data);
+    node* head=new node(data);
+    insertNode(head,data);
     for(int i=0;i<nodeNum-1;i++){
         std::cout<<"Enter the value you want to insert: ";
         std::cin>>data;
-        insertInTree(root,data);
+        insertNode(head,data);
     }
 
     std::cout<<"The preorder traversal is: "<<std::endl;
-    inOrderTraversal(root);
+    preOrderTraversal(head);
     std::cout<<"\n";
-    deleteNode(root,54);
-    inOrderTraversal(root);
+    deleteNode(head,54);
+    preOrderTraversal(head);
 
     /*
     Enter the value you want to insert: 76
@@ -170,6 +131,6 @@ int main(){
            66
     */
 
-    //kthMinimumElement(root,4);
+    //kthMinimumElement(head,4);
     return 0;
 }

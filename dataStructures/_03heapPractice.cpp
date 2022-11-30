@@ -69,18 +69,6 @@ class minHeap{
         }
     }
 
-    int getLeftChild(int parent){
-        return heap[leftChildIndex(parent)];
-    }
-
-    int getRightChild(int parent){
-        return heap[rightChildIndex(parent)];
-    }
-
-    int getParent(int child){
-        return heap[parentIndex(child)];
-    }
-
     void exchangeElem(int elementIndex1,int elementIndex2){
         if(elementIndex1!=elementIndex2){
             int temp=heap[elementIndex1];
@@ -141,7 +129,6 @@ class minHeap{
             std::cout<<"\n";
             return;
         }
-
         for(int i=last/2;i>=0;i--){
             heapify(i);
         }

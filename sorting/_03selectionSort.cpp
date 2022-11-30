@@ -1,4 +1,5 @@
 #include<iostream>
+#include<limits.h>
 
 int maxIndexFunc(int* arr,int last){
     int maxnum=INT_MIN;

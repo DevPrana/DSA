@@ -1,39 +1,132 @@
-#include<bits/stdc++.h>
+// C++ implementation of the approach
+#include <bits/stdc++.h>
+using namespace std;
 
-int ultimateParent(int* parent,int i){
-    while(parent[i]!=i){
-        i=parent[i];
-    }
-    return i;
+// Tree Structure
+typedef struct node
+{
+	char data;
+	struct node *left, *right;
+} * nptr;
+
+// Function to create new node
+nptr newNode(char c)
+{
+	nptr n = new node;
+	n->data = c;
+	n->left = n->right = nullptr;
+	return n;
 }
 
-int setunion(int* parent,int i,int j){
-    int a=ultimateParent(parent,i);
-    int b=ultimateParent(parent,j);
-    parent[a]=b;
+// Function to build Expression Tree
+nptr build(string& s)
+{
+
+	// Stack to hold nodes
+	stack<nptr> stN;
+
+	// Stack to hold chars
+	stack<char> stC;
+	nptr t, t1, t2;
+
+	// Prioritising the operators
+	int p[123] = { 0 };
+	p['+'] = p['-'] = 1, p['/'] = p['*'] = 2, p['^'] = 3,
+	p[')'] = 0;
+
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (s[i] == '(') {
+
+			// Push '(' in char stack
+			stC.push(s[i]);
+		}
+
+		// Push the operands in node stack
+		else if (isalpha(s[i]))
+		{
+			t = newNode(s[i]);
+			stN.push(t);
+		}
+		else if (p[s[i]] > 0)
+		{
+			// If an operator with lower or
+			// same associativity appears
+			while (
+				!stC.empty() && stC.top() != '('
+				&& ((s[i] != '^' && p[stC.top()] >= p[s[i]])
+					|| (s[i] == '^'
+						&& p[stC.top()] > p[s[i]])))
+			{
+
+				// Get and remove the top element
+				// from the character stack
+				t = newNode(stC.top());
+				stC.pop();
+
+				// Get and remove the top element
+				// from the node stack
+				t1 = stN.top();
+				stN.pop();
+
+				// Get and remove the currently top
+				// element from the node stack
+				t2 = stN.top();
+				stN.pop();
+
+				// Update the tree
+				t->left = t2;
+				t->right = t1;
+
+				// Push the node to the node stack
+				stN.push(t);
+			}
+
+			// Push s[i] to char stack
+			stC.push(s[i]);
+		}
+		else if (s[i] == ')') {
+			while (!stC.empty() && stC.top() != '(')
+			{
+				t = newNode(stC.top());
+				stC.pop();
+				t1 = stN.top();
+				stN.pop();
+				t2 = stN.top();
+				stN.pop();
+				t->left = t2;
+				t->right = t1;
+				stN.push(t);
+			}
+			stC.pop();
+		}
+	}
+	t = stN.top();
+	return t;
 }
 
-void kruskallsMST(int** adjacencyMatrix,int vertexNum){
-    int parent[vertexNum];
-    for(int i=0;i<vertexNum;i++){
-        parent[i]=i;
-    }
-    int edgeCount=0;
-    while(edgeCount!=vertexNum-1){
-        int min=INT_MAX;
-        int a=-1;
-        int b=-1;
-        for(int i=0;i<vertexNum;i++){
-            for(int j=0;j<vertexNum;j++){
-                if(ultimateParent(parent,i)!=ultimateParent(parent,j)&&adjacencyMatrix[i][j]<min){
-                    min=adjacencyMatrix[i][j];
-                    a=i;
-                    b=j;
-                }
-            }
-        }
-        setunion(parent,a,b);
-        edgeCount++;
-        std::cout<<a<<"->"<<b<<" cost: "<<min<<std::endl;
-    }
+// Function to print the post order
+// traversal of the tree
+void postorder(nptr root)
+{
+	if (root)
+	{
+		postorder(root->left);
+		postorder(root->right);
+		cout << root->data;
+	}
+}
+
+// Driver code
+int main()
+{
+	string s = "(a^b^(c/d/e-f)^(x*y-m*n))";
+	s = "(" + s;
+	s += ")";
+	nptr root = build(s);
+
+	// Function call
+	postorder(root);
+
+	return 0;
 }

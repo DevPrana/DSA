@@ -148,7 +148,7 @@ int main(){
     std::cout<<"The preorder traversal is: "<<std::endl;
     inOrderTraversal(root);
     std::cout<<"\n";
-    deleteNode(root,54);
+    deleteNode(root,40);
     inOrderTraversal(root);
 
     /*

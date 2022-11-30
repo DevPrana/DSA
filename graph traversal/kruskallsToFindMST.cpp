@@ -59,17 +59,6 @@ int main(){
 			adjacencyMatrix[x][y]=adjacencyMatrix1[x][y]; 
         }
     }
-
-    // std::cout<<"Your adjacency matrix is: "<<std::endl;
-
-
-    // // std::cout<<"We will now print the formed MST by providing the edges joined (x to y) nad their corresponding weights:"<<std::endl;
-    // for(int x=0;x<vertexNum;x++){
-    //     for(int y=0;y<vertexNum;y++){
-    //         std::cout<<adjacencyMatrix[x][y]<<" ";
-    //     }
-    //     std::cout<<"\n";
-    // }
 	std::cout<<"Your MST is: "<<std::endl;
     MSTusingKruskals(adjacencyMatrix,vertexNum);
     return 0;
