@@ -1,44 +1,63 @@
 #include <bits/stdc++.h>
-
-int min(int a, int b){
-    return a < b ? a : b;
-}
-
-int carAssembly(int a[][4],int t[][4],int*e,int *x){
-    int first,second,i;
-
-    first=e[0]+a[0][0];
-    second=e[1]+a[1][0];
-
-    for(int i=1;i<4;i++){
-        int up=min(first+a[0][i],second+a[0][i]+t[1][i]);
-        int down=min(second+a[1][i],first+a[1][i]+t[0][i]);
-
-        first=up;
-        second=down;
-    }
-    return min(first+x[0],second+x[1]);
-
-}
-
-int main(){
-    // int size;
-    // std::cout<<"Enter the size of the assembly line: ";
-    // std::cin>>size;
-    // int** a=new int*[2];
-    // int** t=new int*[2];
-    // for(int i=0;i<size;i++){
-    //     a[i]=new int[size];
-    //     t[i]=new int[size];
-    // }
-
-    int a[][4] = { { 4, 5, 3, 2 },
-                   { 2, 10, 1, 4 } };
-    int t[][4] = { { 0, 7, 4, 5 },
-                   { 0, 9, 2, 8 } };
-    int e[] = { 10, 12 }, x[] = { 18, 7 };
-    std::cout<<carAssembly(a,t,e,x);
-    
-
-    return 0;
+using namespace std;
+int main() 
+{ 
+    int a[2][6] = { {7,9,3,4,8,4},{8,5,6,4,5,7} }; 
+    int t[2][5] = { {2,3,1,3,4},{2,1,2,2,1} }; 
+    int e[2] = {2,4};
+    int x[2] = {3,2}; 
+    int n=6;
+    int path[2][n];
+   int dp[n][n];
+ 
+    // time taken to reach station 0 in assembly line 0 
+    dp[0][0] = e[0] + a[0][0]; 
+     
+    // time taken to reach station 0 in assembly line 1
+    dp[1][0] = e[1] + a[1][0]; 
+ 
+    for(int j = 1; j< n; j++) 
+    { 
+         int first=dp[0][j - 1] + a[0][j];
+         int second=dp[1][j - 1] + t[1][j-1] + a[0][j];
+         if(first<=second)
+         {
+         	dp[0][j]=first;
+         	path[0][j]=0;
+         }
+         else
+         {
+         	dp[0][j]=second;
+         	path[0][j]=1;
+		 }
+		 first=dp[0][j - 1] + t[0][j-1] + a[1][j];
+		 second=dp[1][j - 1] + a[1][j];
+		 if(first<=second)
+         {
+         	dp[1][j]=first;
+         	path[1][j]=0;
+         }
+         else
+         {
+         	dp[1][j]=second;
+         	path[1][j]=1;
+		 }
+         	
+    } 
+ 
+    int last;
+    if(dp[0][n-1] + x[0]<dp[1][n-1] + x[1])
+     last=0;
+	else
+	  last=1;
+    cout<< min(dp[0][n-1] + x[0], dp[1][n-1] + x[1])<<"\n";
+	int i=last;  
+	cout<<"exit should be reached from assembly line "<<i <<"\n";
+	for(int j = n-1; j>0; j--) 
+	{
+		i=path[i][j];
+		 cout<<"station " <<j <<" should be reached from assembly line "<<i <<"\n";
+		
+	 } 
+    return 0; 
 }

@@ -21,20 +21,19 @@ int main()
   {
     for(int j=1;j<=n;j++)
     {
-    	 if(s1.at(i-1)==s2.at(j-1))
-    	 {
-           dp[i][j]= 1+dp[i-1][j-1];
-           seq[i][j]=3; //to denote that the value is obtained from diagonal
-         }
-  else
-  {
-    int first=dp[i][j-1];
-    int second=dp[i-1][j];
-    dp[i][j]= first>second?first:second;
-    seq[i][j]= first>second?1:2; //1 to denote that the value is obtained from left   
-  }                              // 2 to denote that the value is obtained from top cell
-}                                
-}
+      if(s1.at(i-1)==s2.at(j-1))
+      {
+        dp[i][j]= 1+dp[i-1][j-1];
+        seq[i][j]=3; //to denote that the value is obtained from diagonal
+        }
+      else{
+        int first=dp[i][j-1];
+        int second=dp[i-1][j];
+        dp[i][j]= first>second?first:second;
+        seq[i][j]= first>second?1:2; //1 to denote that the value is obtained from left   
+      }                              // 2 to denote that the value is obtained from top cell
+    }                                
+  }
 for(int i=0;i<=m;i++)
   {
     for(int j=0;j<=n;j++)
