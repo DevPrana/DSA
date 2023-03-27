@@ -5,8 +5,12 @@ using namespace std;
 
 int main()
 {
-  string s1 = "speedy";
-  string s2 = "steady";
+  std::cout<<"Enter string 1: ";
+  string s1;
+  std::cin>>s1;
+  std::cout<<"Enter string 2: ";
+  string s2;
+  std::cin>>s2;
   int m = s1.size();
   int n = s2.size();
   int dp[m+1][n+1];

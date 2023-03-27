@@ -32,6 +32,11 @@ int karat(int a,int b){
 }
 
 int main(){
-    std::cout<<karat(42,53);
+    std::cout<<"Enter number 1: ";
+    int n1,n2;
+    std::cin>>n1;
+    std::cout<<"Enter number 2: ";
+    std::cin>>n2;
+    std::cout<<"Their result is: "<<karat(n1,n2);
     return 0;
 }

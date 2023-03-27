@@ -39,6 +39,14 @@ int maxsum(int a[],int l,int h){
 
 int main()
 {
-	int a[]={-2,-5,6,-2,-3,1,5,-6};
-	cout<<maxsum(a,0,7);
+    std:cout<<"Enter array length: ";
+    int len;
+    std::cin>>len;
+    int arr[100];
+    
+    for(int i=0;i<len;i++){
+        std::cout<<"Enter element "<<i+1<<": ";
+        std::cin>>arr[i];
+    }
+	cout<<"maximum subarray sum is: "<<maxsum(arr,0,len);
 }

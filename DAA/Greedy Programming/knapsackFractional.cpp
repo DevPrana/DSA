@@ -49,6 +49,7 @@ int main(){
         std::cin>>profits[i]>>weights[i];
         pwratio[i]=(float)profits[i]/(float)weights[i]; 
     }
+    
     selectionSort(pwratio,profits,weights,size);
     std::cout<<"Weight   Profit   pwratio"<<std::endl;
     for(int i=0;i<size;i++){

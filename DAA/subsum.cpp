@@ -1,89 +1,49 @@
-#include<stack>
-#include<iostream>
+#include <iostream>
+#include <stack>
 using namespace std;
-int a[]={1,3,5,2};
-int n=4,tar=6;
-stack<int> stck;
-bool found=false;
-void print()
+
+bool isSubsetSum(int arr[], int n, int sum)
 {
+    stack<pair<int, int>> st;
+    st.push({0, 0});
 
-	stack<int> temp;
+    while (!st.empty())
+    {
+        int curr_sum = st.top().first;
+        int index = st.top().second;
+        st.pop();
 
-	while(!stck.empty())
+        if (curr_sum == sum)
+            return true;
 
-	{
+        if (index == n)
+            continue;
 
-		temp.push(stck.top());
+        st.push({curr_sum, index + 1});
+        st.push({curr_sum + arr[index], index + 1});
+    }
 
-		stck.pop();
-
-	}
-
-	while(!temp.empty())
-
-	{
-
-		cout<<temp.top()<<"\n";
-
-		stck.push(temp.top());
-
-		temp.pop();
-
-	}
-
-	
-
+    return false;
 }
 
-
-
-void solve(int curr,int ind)
-
+int main()
 {
+    int n, sum;
+    cout << "Enter the size of array: ";
+    cin >> n;
+    int arr[n];
+    cout << "Enter the elements of array: ";
+    for (int i = 0; i < n; i++)
+    {
+        cin >> arr[i];
+    }
+    cout << "Enter the sum to be checked: ";
+    cin >> sum;
 
-	if(curr>tar)
+    if (isSubsetSum(arr, n, sum))
+        cout << "Subset with the given sum exists\n";
+    else
+        cout << "Subset with the given sum does not exist\n";
 
-	  return;
-
-	if(curr==tar)
-
-	{
-
-		found=true;
-
-		print();
-
-		return;
-
-	}
-
-	for(int i=ind;i<n;i++)
-
-	{
-
-		stck.push(a[i]);
-
-		solve(curr+a[i],i+1);
-
-		stck.pop();
-
-	}
-
-}
-
-
-
-main()
-
-{
-
-	solve(0,0);
-
-	if(found==false)
-
-	  cout<<"no solution";
-
-	return 0;
-
+    return 0;
 }
